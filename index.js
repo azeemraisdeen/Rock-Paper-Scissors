@@ -1,4 +1,4 @@
-// console.log("Hello Azeem!, how are you?")
+console.log("Hello Azeem!, how are you?")
 
 function getComputerChoice() {
     const values = ["rock", "paper", "scissor"]
@@ -13,44 +13,81 @@ function getHumanChoice(){
     return humanChoice
 }
 
-
-function playRound(humanChoice, computerChoice){
-    if (computerChoice === "rock" && humanChoice === "rock") {
-        console.log("Draw!, try again.")
-    }
-    else if (computerChoice === "rock" && humanChoice === "paper") {
-        console.log("You win!")
-    }
-    else if (computerChoice === "rock" && humanChoice === "scissor") {
-        console.log("You lose, rock beats scissor")
-    }
-    else if (humanChoice === "rock" && computerChoice === "rock") {
-        console.log("Draw!, try again.")
-    }
-    else if (humanChoice === "paper" && computerChoice === "rock") {
-        console.log("You win!")
-    }
-    else if (humanChoice === "scissor" && computerChoice === "paper") {
-        console.log("You win!")
-    }
-    
-}
-
-
-function playGame(){
-    
-}
-
 const humanChoice = getHumanChoice()
 const computerChoice = getComputerChoice()
 
+function playRound(playerChoice, computerChoice) {
+    if (playerChoice === computerChoice) {
+        return 'draw';
+    } else if (
+        (playerChoice === 'rock' && computerChoice === 'scissors') ||
+        (playerChoice === 'paper' && computerChoice === 'rock') ||
+        (playerChoice === 'scissors' && computerChoice === 'paper')
+    ) {
+        return 'player';
+    } else {
+        return 'computer';
+    }
+}
 
 
-let humanScore = 0
-let computerScore = 0
+// Function to update the score
+function updateScore(result, score) {
+    if (result === 'player') {
+        score.player += 1;
+    } else if (result === 'computer') {
+        score.computer += 1;
+    }
+    // No need to update the score for a draw
+}
+
+// Main function to play the game
+function playGame() {
+    const score = { player: 0, computer: 0 };
+    const rounds = 5;
+
+    for (let i = 0; i < rounds; i++) {
+        const playerChoice = prompt('Enter your choice (rock, paper, or scissors):').toLowerCase();
+        const computerChoice = getComputerChoice();
+
+        console.log(`Round ${i + 1}:`);
+        console.log(`Player choice: ${playerChoice}`);
+        console.log(`Computer choice: ${computerChoice}`);
+
+        const result = playRound(playerChoice, computerChoice);
+        
+        if (result === 'player') {
+            console.log('You win this round!');
+        } else if (result === 'computer') {
+            console.log('Computer wins this round!');
+        } else {
+            console.log('This round is a draw!');
+        }
+
+        updateScore(result, score);
+    }
+
+    console.log('Final Score:');
+    console.log(`Player: ${score.player}`);
+    console.log(`Computer: ${score.computer}`);
+
+    if (score.player > score.computer) {
+        console.log('You win the game!');
+    } else if (score.player < score.computer) {
+        console.log('Computer wins the game!');
+    } else {
+        console.log('The game is a draw!');
+    }
+}
+
+// Start the game
+playGame();
 
 
 
-// console.log(getComputerChoice())
-// console.log(getHumanChoice())
-playRound(humanChoice, computerChoice)
+
+
+
+
+
+
